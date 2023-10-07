@@ -2,7 +2,9 @@ package br.unitins.topicos1.dto;
 
 
 import br.unitins.topicos1.model.TipoProduto;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
@@ -15,10 +17,12 @@ public record AlbumDTO (
 
     String descricao,
 
+    @NotNull(message = "O preço deve ser informado")
     Double preco,
 
     TipoProduto tipoProduto,
 
+    
     Integer estoque,
 
     Long id_artista,

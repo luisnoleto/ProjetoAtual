@@ -7,12 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Usuario extends DefaultEntity {
 
     private String login;
     private String nome;
+
+    @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
     private String senha;
     private Boolean isAdmin;
 

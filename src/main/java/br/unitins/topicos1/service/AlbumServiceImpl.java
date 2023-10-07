@@ -1,6 +1,8 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.Set;
+
 import br.unitins.topicos1.dto.AlbumDTO;
 import br.unitins.topicos1.dto.AlbumResponseDTO;
 import br.unitins.topicos1.model.Album;
@@ -11,6 +13,8 @@ import br.unitins.topicos1.repository.GravadoraRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -32,9 +36,17 @@ public class AlbumServiceImpl implements AlbumService{
     @Inject
     Validator validator;
 
+    private void validar(AlbumDTO albumDTO) throws ConstraintViolationException {
+        Set<ConstraintViolation<AlbumDTO>> violations = validator.validate(albumDTO);
+
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
+    }
+
     @Override
     @Transactional
     public AlbumResponseDTO insert(AlbumDTO dto) {
+        validar(dto);
         Album novoAlbum = new Album();
 
         novoAlbum.setNome(dto.nome());

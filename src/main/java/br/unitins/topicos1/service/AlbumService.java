@@ -4,9 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.AlbumDTO;
 import br.unitins.topicos1.dto.AlbumResponseDTO;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 
 public interface AlbumService {
-    public AlbumResponseDTO insert(AlbumDTO dto);
+    public AlbumResponseDTO insert(@Valid AlbumDTO dto) throws ConstraintViolationException;
 
     public AlbumResponseDTO update(AlbumDTO dto, Long id);
 

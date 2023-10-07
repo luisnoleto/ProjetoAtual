@@ -1,6 +1,7 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.Set;
 
 import br.unitins.topicos1.dto.GeneroDTO;
 import br.unitins.topicos1.dto.GeneroResponseDTO;
@@ -9,6 +10,9 @@ import br.unitins.topicos1.repository.GeneroRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -22,9 +26,17 @@ public class GeneroServiceImpl implements GeneroService{
     @Inject
     Validator validator;
 
+    private void validar(GeneroDTO generoDTO) throws ConstraintViolationException {
+        Set<ConstraintViolation<GeneroDTO>> violations = validator.validate(generoDTO);
+
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
+    }
+
     @Override
     @Transactional
-    public GeneroResponseDTO insert(GeneroDTO dto) {
+    public GeneroResponseDTO insert(@Valid GeneroDTO dto) throws ConstraintViolationException {
+        validar(dto);
         Genero novoGenero = new Genero();
         novoGenero.setNome(dto.nome());
 

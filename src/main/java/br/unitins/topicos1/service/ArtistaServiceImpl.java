@@ -1,6 +1,7 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.Set;
 
 import br.unitins.topicos1.dto.ArtistaDTO;
 import br.unitins.topicos1.dto.ArtistaResponseDTO;
@@ -9,6 +10,8 @@ import br.unitins.topicos1.repository.ArtistaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -22,9 +25,17 @@ public class ArtistaServiceImpl implements ArtistaService{
     @Inject
     Validator validator;
 
+    private void validar(ArtistaDTO artistaDTO) throws ConstraintViolationException {
+        Set<ConstraintViolation<ArtistaDTO>> violations = validator.validate(artistaDTO);
+
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
+    }
+
     @Override
     @Transactional
     public ArtistaResponseDTO insert(ArtistaDTO dto) {
+        validar(dto);
         Artista novoArtista = new Artista();
         novoArtista.setNome(dto.nome());
         novoArtista.setDescricao(dto.descricao());

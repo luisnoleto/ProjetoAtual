@@ -4,9 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.GravadoraDTO;
 import br.unitins.topicos1.dto.GravadoraResponseDTO;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 
 public interface GravadoraService {
-    public GravadoraResponseDTO insert(GravadoraDTO dto);
+    public GravadoraResponseDTO insert(@Valid GravadoraDTO dto) throws ConstraintViolationException;
 
     public GravadoraResponseDTO update(GravadoraDTO dto, Long id);
 

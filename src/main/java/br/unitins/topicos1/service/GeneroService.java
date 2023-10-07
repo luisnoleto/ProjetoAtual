@@ -4,9 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.GeneroDTO;
 import br.unitins.topicos1.dto.GeneroResponseDTO;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 
 public interface GeneroService {
-    public GeneroResponseDTO insert(GeneroDTO dto);
+    public GeneroResponseDTO insert(@Valid GeneroDTO dto) throws ConstraintViolationException;
 
     public GeneroResponseDTO update(GeneroDTO dto, Long id);
 

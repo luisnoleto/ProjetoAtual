@@ -1,6 +1,7 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.Set;
 
 import br.unitins.topicos1.dto.GravadoraDTO;
 import br.unitins.topicos1.dto.GravadoraResponseDTO;
@@ -9,6 +10,9 @@ import br.unitins.topicos1.repository.GravadoraRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -22,9 +26,17 @@ public class GravadoraServiceImpl implements GravadoraService{
     @Inject
     Validator validator;
 
+    private void validar(GravadoraDTO gravadoraDTO) throws ConstraintViolationException {
+        Set<ConstraintViolation<GravadoraDTO>> violations = validator.validate(gravadoraDTO);
+
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
+    }
+
     @Override
     @Transactional
-    public GravadoraResponseDTO insert(GravadoraDTO dto) {
+    public GravadoraResponseDTO insert(@Valid GravadoraDTO dto) throws ConstraintViolationException {
+        validar(dto);
         Gravadora novoGravadora = new Gravadora();
         novoGravadora.setNome(dto.nome());
 
