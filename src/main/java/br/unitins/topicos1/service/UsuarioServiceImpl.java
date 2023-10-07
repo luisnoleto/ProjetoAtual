@@ -84,6 +84,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public void delete(Long id) {
+        Usuario usuario = repository.findById(id);
+        repository.delete(usuario);
     }
 
     @Override

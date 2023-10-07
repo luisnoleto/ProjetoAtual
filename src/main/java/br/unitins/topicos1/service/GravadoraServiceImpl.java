@@ -64,9 +64,12 @@ public class GravadoraServiceImpl implements GravadoraService{
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id)) 
+        Gravadora gravadora = repository.findById(id);
+        if (gravadora != null)
+            repository.delete(gravadora);
+        else
             throw new NotFoundException();
-    }
+        }
 
     @Override
     public GravadoraResponseDTO findById(Long id) {

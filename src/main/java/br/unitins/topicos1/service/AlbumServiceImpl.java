@@ -64,12 +64,12 @@ public class AlbumServiceImpl implements AlbumService{
         return AlbumResponseDTO.valueOf(novoAlbum);
     }
 
-    @Override
+@Override
 @Transactional
 public AlbumResponseDTO update(AlbumDTO dto, Long id) {
 
     Album album = repository.findById(id);
-    if (album != null) {
+
         album.setNome(dto.nome());
         album.setAnoLancamento(dto.anoLancamento());
         album.setArtista(artistaRepository.findById(dto.id_artista()));
@@ -78,9 +78,8 @@ public AlbumResponseDTO update(AlbumDTO dto, Long id) {
         album.setDescricao(dto.descricao());
         album.setPreco(dto.preco());
         album.setEstoque(dto.estoque());
-    } else {
-        throw new NotFoundException();
-    }
+        album.setTipoProduto(dto.tipoProduto());
+    
 
     return AlbumResponseDTO.valueOf(album);
 }
@@ -88,9 +87,12 @@ public AlbumResponseDTO update(AlbumDTO dto, Long id) {
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id)) 
+        Album  album = repository.findById(id);
+        if (album != null)
+            repository.delete(album);
+        else
             throw new NotFoundException();
-    }
+        }
 
     @Override
     public AlbumResponseDTO findById(Long id) {

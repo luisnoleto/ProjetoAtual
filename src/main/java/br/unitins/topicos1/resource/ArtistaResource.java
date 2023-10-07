@@ -1,5 +1,6 @@
 package br.unitins.topicos1.resource;
 import java.util.List;
+
 import org.jboss.logging.Logger;
 import br.unitins.topicos1.dto.ArtistaDTO;
 import br.unitins.topicos1.dto.ArtistaResponseDTO;
@@ -61,7 +62,7 @@ public class ArtistaResource {
         try{
             service.update(dto, id);
             LOG.infof("Atualizado o artista: %s", dto.nome());
-            return Response.status(Status.OK).build();
+            return Response.status(Status.NO_CONTENT).build();
         } catch (ConstraintViolationException e) {
             LOG.infof("Erro ao atualizar o artista.");
             result = new Result(e.getConstraintViolations());
@@ -81,7 +82,7 @@ public class ArtistaResource {
         try{
             service.delete(id);
             LOG.infof("Deletado o artista: %d", id);
-            return Response.status(Status.OK).build();
+            return Response.status(Status.NO_CONTENT).build();
         } catch (IllegalArgumentException e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
             return Response.status(Status.NOT_FOUND).build();
@@ -98,17 +99,19 @@ public class ArtistaResource {
 
     @GET
     @Path("/{id}")
-    public ArtistaResponseDTO findById(@PathParam("id") Long id) throws NotFoundException{
+    public Response findById(@PathParam("id") Long id) throws NotFoundException{
         LOG.infof("Buscando artista por id: %d", id);
-        return service.findById(id);
+        return Response.ok(service.findById(id)).build();
     }
 
     @GET
-    @Path("/search/{nome}")
-    public List<ArtistaResponseDTO> findByName(@PathParam("nome") String nome)
-       {
-        LOG.infof("Buscando artista por nome: %s", nome);
-        return service.findByName(nome);
+    @Path("/search/nome/{nome}")
+    public Response findByName(@PathParam("nome") String nome) {
+        List<ArtistaResponseDTO> artistas = service.findByName(nome);
+        if (artistas.isEmpty()) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        return Response.status(Status.OK).entity(artistas).build();
     }
 
 }

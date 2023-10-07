@@ -61,8 +61,12 @@ public class GeneroServiceImpl implements GeneroService{
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id)) 
+       Genero genero = repository.findById(id);
+        if (genero == null)
             throw new NotFoundException();
+
+        repository.delete(genero);
+    
     }
 
     @Override

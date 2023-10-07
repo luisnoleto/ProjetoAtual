@@ -54,7 +54,7 @@ public class AlbumResource {
     }
 
     @PUT
-    //@Transactional
+    @Transactional
     @Path("/{id}")   
     public Response update(AlbumDTO dto, @PathParam("id") Long id){
         Result result = null;
@@ -70,7 +70,7 @@ public class AlbumResource {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
             result = new Result(e.getMessage(), false);  
         }
-         return Response.status(Status.NOT_FOUND).entity(result).build();
+         return Response.status(Status.NO_CONTENT).entity(result).build();
     }
 
 
@@ -104,7 +104,7 @@ public class AlbumResource {
     }
 
     @GET
-    @Path("/search/{nome}")
+    @Path("/search/nome/{nome}")
     public List<AlbumResponseDTO> findByName(@PathParam("nome") String nome)
     
        

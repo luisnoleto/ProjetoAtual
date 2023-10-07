@@ -11,4 +11,6 @@ public class AlbumRepository implements PanacheRepository<Album>{
     public List<Album> findByName(String nome){
         return find("nome LIKE ?1", "%"+nome, "%").list();
     }
+
+    
 }

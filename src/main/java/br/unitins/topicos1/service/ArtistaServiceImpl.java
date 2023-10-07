@@ -2,6 +2,7 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ArtistaDTO;
 import br.unitins.topicos1.dto.ArtistaResponseDTO;
@@ -60,14 +61,15 @@ public class ArtistaServiceImpl implements ArtistaService{
     }
 
 
-
-
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id)) 
+        Artista artista = repository.findById(id);
+        if (artista != null)
+            repository.delete(artista);
+        else
             throw new NotFoundException();
-    }
+        }
 
     @Override
     public ArtistaResponseDTO findById(Long id) {
@@ -75,15 +77,18 @@ public class ArtistaServiceImpl implements ArtistaService{
     }
 
     @Override
+    @Transactional
     public List<ArtistaResponseDTO> findByName(String nome) {
-        return repository.findByName(nome).stream()
-            .map(a -> ArtistaResponseDTO.valueOf(a)).toList();
+        List<Artista> artistas = repository.findByName(nome);
+        return artistas.stream()
+            .map(a -> ArtistaResponseDTO.valueOf(a))
+            .toList();
     }
 
     @Override
     public List<ArtistaResponseDTO> findByAll() {
         return repository.listAll().stream()
-            .map(a -> ArtistaResponseDTO.valueOf(a)).toList();
+            .map(a -> ArtistaResponseDTO.valueOf(a)).collect(Collectors.toList());
     }
     
 }
