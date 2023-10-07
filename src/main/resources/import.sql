@@ -1,12 +1,21 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
+insert into genero (nome) values ('Pop');
+INSERT into genero (nome) values ('Rock');
+INSERT into genero (nome) values ('Funk');
+INSERT into genero (nome) values ('Sertanejo');
+INSERT into genero (nome) values ('MPB');
+insert into artista (nome, descricao) values ('Anitta', 'Anitta é uma cantora, compositora, atriz, apresentadora e empresária brasileira. Iniciou sua ');
+insert into artista (nome, descricao) values ('Ariana Grande', 'Ariana Grande-Butera é uma cantora, atriz, compositora e apresentadora estadunidens');
+insert into artista (nome, descricao) values ('Beyoncé', 'Beyoncé Giselle Knowles-Carter é uma c atriz norte-americana. Nas mais de 50 milhões de discos mundialmente.');
+insert into artista (nome, descricao) values ('Billie Eilish', 'Billie Eilish Pirate Baird O''Connell ora e compositora norte-americana. Nascida e criada a com 8 anos de idade.');
+insert into artista (nome, descricao) values ('Dua Lipa', 'Dua Lipa é uma cantora, compositora e modelo britânica. Sua carreira musical começou aos 14 anos, quando começou a e.');
+insert into artista (nome, descricao) values ('Taylor Swift', 'Taylor Alison Swift é uma cantora e compositora norte-americana. Uma das mais populares cantoras .');
+insert into telefone (codigoArea, numero) values (99, 999999999);
+insert into telefone (codigoArea, numero) values (11, 111111111);
 
-insert into estado (id, nome, sigla) values(1, 'tocantins', 'TOP');
-insert into estado (id, nome, sigla) values(2, 'rio grande do sul', 'RSRS');
-insert into estado (id, nome, sigla) values(3, 'ratanaba', 'RAT');
-
-
+insert into usuario (nome, login, senha, isAdmin)  values ('admin', 'admin', 'admin', true);
+insert into usuario (nome, login, senha, isAdmin) values ('user', 'user', 'user', false);
+insert into gravadora (nome) values ('Warner Music');
+insert into gravadora (nome) values ('Sony Music');
+insert into gravadora (nome) values ('Universal Music');
+insert into gravadora (nome) values ('EMI');
+insert into album (nome, descricao, preco, estoque, id_artista, id_genero, id_gravadora) values ('Kisses', 'Kisses é o quarto álbum de estúdio da cantora brasileira Anitta,internacional.', 29.90, 100, 1, 5, 3);
