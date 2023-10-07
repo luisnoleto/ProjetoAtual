@@ -5,27 +5,24 @@ class Usuario {
        - nome: String
        - email: String
        - senha: String
+       - cpf: String
        - isAdmin: Boolean
     }
 
     class Album {
-    - nome: String
     - anoLancamento: String
     }
 
     class Gravadora{
-        - id: Long
         - nome: String
     }
 
     class Artista{
-        - id: Long
         - nome: String
         - descricao: String
     }
 
     class Genero{
-        - id: Long
         - nome: String
     }
     
@@ -36,10 +33,7 @@ class Usuario {
         FITA_CASSETE
 
     }
-
-    abstract class Produto {
-
-        - id: Long
+    class Produto {
         - nome: String
         - descricao: String
         - preco: Double
@@ -60,7 +54,6 @@ class Usuario {
     }
 
      class Telefone {
-        - id: Long
         - codigoArea: String
         - numero: String
     }
@@ -104,7 +97,7 @@ class Usuario {
         - cpf: String
     }
 
-    TipoProduto "1" --> "*" Album
+    TipoProduto "1" --> "*" Produto
 
     Venda "1" o--> "1" Endereco
 
@@ -115,19 +108,17 @@ class Usuario {
 
     Venda "*" --> "1" Usuario
 
-    ItemVenda "*" --> "1" Album
+    ItemVenda "*" --> "1" Produto
 
     Usuario "*" *--> "1" Endereco
 
     Usuario "1" --> "*" Telefone
     
-    Album "1" --> "1" Artista
+    Album "*" --> "1" Artista
 
-    Album "1" --> "*" Genero
+    Album "*" --> "1" Genero
 
-    Produto "1" --> "1" Gravadora
-
-    Produto "*" --> "*" Genero
+    Album "*" --> "1" Gravadora
 
     Venda "1" --> "1" Usuario
 

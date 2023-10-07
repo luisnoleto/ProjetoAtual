@@ -1,8 +1,9 @@
 package br.unitins.topicos1.dto;
 
-import java.util.List;
+
 
 import br.unitins.topicos1.model.Album;
+import br.unitins.topicos1.model.TipoProduto;
 
 
 
@@ -14,8 +15,9 @@ public record AlbumResponseDTO(
     Double preco,
     Integer estoque,
     ArtistaResponseDTO artista,
-    List<GeneroResponseDTO> genero,
-    GravadoraResponseDTO gravadora
+    GeneroResponseDTO genero,
+    GravadoraResponseDTO gravadora,
+    TipoProduto tipoProduto
 ) {
     public static AlbumResponseDTO valueOf(Album album){
         return new AlbumResponseDTO(
@@ -26,8 +28,9 @@ public record AlbumResponseDTO(
             album.getPreco(),
             album.getEstoque(),
             ArtistaResponseDTO.valueOf(album.getArtista()),
-            album.getGenero().stream().map(g -> GeneroResponseDTO.valueOf(g)).toList(),
-            GravadoraResponseDTO.valueOf(album.getGravadora())
+            GeneroResponseDTO.valueOf(album.getGenero()),
+            GravadoraResponseDTO.valueOf(album.getGravadora()),
+            album.getTipoProduto()
 
 
             

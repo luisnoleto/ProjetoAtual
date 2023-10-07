@@ -1,13 +1,9 @@
 package br.unitins.topicos1.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import br.unitins.topicos1.dto.AlbumDTO;
 import br.unitins.topicos1.dto.AlbumResponseDTO;
-import br.unitins.topicos1.dto.GeneroDTO;
 import br.unitins.topicos1.model.Album;
-import br.unitins.topicos1.model.Genero;
 import br.unitins.topicos1.repository.AlbumRepository;
 import br.unitins.topicos1.repository.ArtistaRepository;
 import br.unitins.topicos1.repository.GeneroRepository;
@@ -33,7 +29,6 @@ public class AlbumServiceImpl implements AlbumService{
     GravadoraRepository gravadoraRepository;
 
 
-
     @Inject
     Validator validator;
 
@@ -42,15 +37,11 @@ public class AlbumServiceImpl implements AlbumService{
     public AlbumResponseDTO insert(AlbumDTO dto) {
         Album novoAlbum = new Album();
 
-        List<Genero> generos = new ArrayList<Genero>();
         novoAlbum.setNome(dto.nome());
         novoAlbum.setAnoLancamento(dto.anoLancamento());
         novoAlbum.setArtista(artistaRepository.findById(dto.id_artista()));
-
-        for (GeneroDTO item : dto.id_genero()) {
-           generos.add(generoRepository.findById(dto.id_genero()));
-        }
-
+        novoAlbum.setGenero(generoRepository.findById(dto.id_genero()));
+        novoAlbum.setTipoProduto(dto.tipoProduto());
         novoAlbum.setGravadora(gravadoraRepository.findById(dto.id_gravadora()));
         novoAlbum.setDescricao(dto.descricao());
         novoAlbum.setPreco(dto.preco());
@@ -62,28 +53,26 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    @Transactional
-    public AlbumResponseDTO update(AlbumDTO dto, Long id) {
+@Transactional
+public AlbumResponseDTO update(AlbumDTO dto, Long id) {
 
-        Album album = repository.findById(id);
-        if (album != null){
-            album.setNome(dto.nome());
-            album.setAnoLancamento(dto.anoLancamento());
-            album.setArtista(artistaRepository.findById(dto.id_artista()));
-
-            List<Genero> generos = new ArrayList<Genero>();
-            for (GeneroDTO item : dto.id_genero()) {
-            generos.add(generoRepository.findById(dto.id_genero()));
-        }
-            album.setGravadora(gravadoraRepository.findById(dto.id_gravadora()));
-            album.setDescricao(dto.descricao());
-            album.setPreco(dto.preco());
-            album.setEstoque(dto.estoque());
-        } else
-            throw new NotFoundException();
-
-        return AlbumResponseDTO.valueOf(album);
+    Album album = repository.findById(id);
+    if (album != null) {
+        album.setNome(dto.nome());
+        album.setAnoLancamento(dto.anoLancamento());
+        album.setArtista(artistaRepository.findById(dto.id_artista()));
+        album.setGravadora(gravadoraRepository.findById(dto.id_gravadora()));
+        album.setGenero(generoRepository.findById(dto.id_genero()));
+        album.setDescricao(dto.descricao());
+        album.setPreco(dto.preco());
+        album.setEstoque(dto.estoque());
+    } else {
+        throw new NotFoundException();
     }
+
+    return AlbumResponseDTO.valueOf(album);
+}
+
     @Override
     @Transactional
     public void delete(Long id) {

@@ -1,7 +1,7 @@
 package br.unitins.topicos1.dto;
 
-import java.util.List;
 
+import br.unitins.topicos1.model.TipoProduto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -17,11 +17,13 @@ public record AlbumDTO (
 
     Double preco,
 
+    TipoProduto tipoProduto,
+
     Integer estoque,
 
     Long id_artista,
 
-    List<GeneroDTO> id_genero,
+    Long id_genero,
 
     Long id_gravadora
     

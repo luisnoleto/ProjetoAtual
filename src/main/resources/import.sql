@@ -1,21 +1,12 @@
 insert into genero (nome) values ('Pop');
 INSERT into genero (nome) values ('Rock');
-INSERT into genero (nome) values ('Funk');
-INSERT into genero (nome) values ('Sertanejo');
-INSERT into genero (nome) values ('MPB');
 insert into artista (nome, descricao) values ('Anitta', 'Anitta é uma cantora, compositora, atriz, apresentadora e empresária brasileira. Iniciou sua ');
-insert into artista (nome, descricao) values ('Ariana Grande', 'Ariana Grande-Butera é uma cantora, atriz, compositora e apresentadora estadunidens');
-insert into artista (nome, descricao) values ('Beyoncé', 'Beyoncé Giselle Knowles-Carter é uma c atriz norte-americana. Nas mais de 50 milhões de discos mundialmente.');
-insert into artista (nome, descricao) values ('Billie Eilish', 'Billie Eilish Pirate Baird O''Connell ora e compositora norte-americana. Nascida e criada a com 8 anos de idade.');
-insert into artista (nome, descricao) values ('Dua Lipa', 'Dua Lipa é uma cantora, compositora e modelo britânica. Sua carreira musical começou aos 14 anos, quando começou a e.');
-insert into artista (nome, descricao) values ('Taylor Swift', 'Taylor Alison Swift é uma cantora e compositora norte-americana. Uma das mais populares cantoras .');
-insert into telefone (codigoArea, numero) values (99, 999999999);
 insert into telefone (codigoArea, numero) values (11, 111111111);
-
-insert into usuario (nome, login, senha, isAdmin)  values ('admin', 'admin', 'admin', true);
-insert into usuario (nome, login, senha, isAdmin) values ('user', 'user', 'user', false);
-insert into gravadora (nome) values ('Warner Music');
+insert into usuario (nome, login, senha, isAdmin) values ('admin', 'admin', 'admin', true);
+insert into usuario_telefone (id_usuario, id_telefone) values (1, 1);
 insert into gravadora (nome) values ('Sony Music');
-insert into gravadora (nome) values ('Universal Music');
-insert into gravadora (nome) values ('EMI');
-insert into album (nome, descricao, preco, estoque, id_artista, id_genero, id_gravadora) values ('Kisses', 'Kisses é o quarto álbum de estúdio da cantora brasileira Anitta,internacional.', 29.90, 100, 1, 5, 3);
+
+ 
+ 
+ 
+insert into album ( nome, anoLancamento, descricao, preco, estoque, id_artista, id_genero, id_gravadora, tipoProduto) values ('Kisses', '2019', 'Kisses é o quarto álbum de estúdio da cantora brasileira Anitta,internacional.', 29.90, 100, 1, 2, 1, 'CD');

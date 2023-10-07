@@ -35,7 +35,6 @@ public class AlbumResource {
     private static final Logger LOG = Logger.getLogger(AlbumResource.class);
 
     @POST
-    //@Transactional
     public Response insert(@Valid AlbumDTO dto){
         LOG.infof("Inserindo um novo album: %s", dto.nome());
         Result result = null;

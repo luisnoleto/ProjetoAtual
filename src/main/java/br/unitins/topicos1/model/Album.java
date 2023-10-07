@@ -1,22 +1,33 @@
 package br.unitins.topicos1.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Album extends Produto{
+public class Album extends DefaultEntity{
 
 
     @Size(min = 4 , max = 4, message = "O ano de lançamento deve ter 4 caracteres")
     @Column(length = 4)
     private String anoLancamento;  
+
+    @NotBlank(message = "O nome deve ser informado")
+    private String nome;
+    
+    private String descricao;
+
+    @NotNull
+    private Double preco;
+
+    private Integer estoque;
 
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false)
@@ -26,10 +37,11 @@ public class Album extends Produto{
     @JoinColumn(name = "id_gravadora", nullable = false)
     private Gravadora gravadora;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_genero")
-    private List<Genero> genero = new ArrayList<Genero>();
+    private Genero genero;
 
+    @Enumerated(EnumType.STRING)
     private TipoProduto tipoProduto;
 
     public Artista getArtista() {
@@ -57,12 +69,46 @@ public class Album extends Produto{
         this.anoLancamento = anoLancamento;
     }
 
-    public List<Genero> getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(List<Genero> genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
+
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public Integer getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
     }
 
 }
+

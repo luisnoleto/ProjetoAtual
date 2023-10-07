@@ -98,4 +98,17 @@ public class UsuarioResourceTest {
         given().when().get("/usuarios/search/login/" + usuarioTeste.login()).then().statusCode(200);
 
     }
+    
+    @Test
+    public void testFindById() {
+
+        List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+        telefones.add(new TelefoneDTO("83", "999999999"));
+        UsuarioDTO usuarioDTO = new UsuarioDTO("nome1", "login", "senha1", true, telefones);
+        
+        UsuarioResponseDTO usuarioTeste = usuarioService.insert(usuarioDTO);
+
+        given().when().get("/usuarios/" + usuarioTeste.id()).then().statusCode(200);
+    }
+    
 }
