@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 
 @ApplicationScoped
@@ -106,5 +107,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repository.listAll().stream()
         .map(e -> UsuarioResponseDTO.valueOf(e)).collect(Collectors.toList());
     }
-
+    
+    @Override
+    public UsuarioResponseDTO findByLoginAndSenha(String login, String senha) {
+        Usuario usuario = repository.findByLoginAndSenha(login, senha);
+        if (usuario == null) {
+            throw new ValidationException("Login ou senha inválido");
+        }
+        
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
+    
 }

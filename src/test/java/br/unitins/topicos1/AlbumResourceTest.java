@@ -1,11 +1,9 @@
-
 package br.unitins.topicos1;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-
 import br.unitins.topicos1.dto.AlbumDTO;
 import br.unitins.topicos1.dto.AlbumResponseDTO;
 import br.unitins.topicos1.dto.ArtistaDTO;

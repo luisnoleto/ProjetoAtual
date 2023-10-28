@@ -1,6 +1,8 @@
 package br.unitins.topicos1.model;
 
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,6 +30,8 @@ public class Album extends DefaultEntity{
     private Double preco;
 
     private Integer estoque;
+
+    private LocalDate dataCadastro;
 
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false)
@@ -108,6 +112,14 @@ public class Album extends DefaultEntity{
 
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
+    }
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = LocalDate.now();
     }
 
 }

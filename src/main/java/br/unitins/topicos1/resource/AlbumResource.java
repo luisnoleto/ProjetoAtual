@@ -48,7 +48,7 @@ public class AlbumResource {
             result = new Result(e.getConstraintViolations());
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result = new Result(e.getMessage(), false);
+            result = new Result(e.getMessage(), "404", false);
         }
         return Response.status(Status.NOT_FOUND).entity(result).build();
     }
@@ -68,27 +68,27 @@ public class AlbumResource {
             return Response.status(Status.BAD_REQUEST).entity(result).build();
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result = new Result(e.getMessage(), false);  
+            result = new Result(e.getMessage(), "400", false);  
         }
-         return Response.status(Status.NO_CONTENT).entity(result).build();
+         return Response.status(Status.BAD_REQUEST).entity(result).build();
     }
 
 
     @DELETE
     @Transactional
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id) throws IllegalArgumentException{
+    public Response delete(@PathParam("id") Long id)  {
+         Result result = null;
         try{
             service.delete(id);
             LOG.infof("Deletado o album: %d", id);
+            result = new Result("Deletado com sucesso", "200", true);
             return Response.status(Status.OK).build();
         } catch (IllegalArgumentException e) {
-            LOG.fatal("Erro sem identificacao: " + e.getMessage());
+            result = new Result(e.getMessage(), "404", false);
             return Response.status(Status.NOT_FOUND).build();
-        }
-        
+        }   
     }
-
 
     @GET
     public Response findAll(){

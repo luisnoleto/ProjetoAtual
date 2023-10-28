@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.topicos1.dto.GravadoraDTO;
 import br.unitins.topicos1.dto.GravadoraResponseDTO;
-import br.unitins.topicos1.service.GeneroService;
 import br.unitins.topicos1.service.GravadoraService;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

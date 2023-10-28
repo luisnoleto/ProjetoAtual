@@ -49,7 +49,7 @@ public class UsuarioResource {
         } 
         catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result = new Result(e.getMessage(), false);
+            result =   result = new Result(e.getMessage(), "404", false);
         }
         return Response
         .status(Status.NOT_FOUND)
@@ -61,8 +61,28 @@ public class UsuarioResource {
     @Transactional
     @Path("/{id}")
     public Response update(UsuarioDTO dto, @PathParam("id") Long id) {
+        try{
+        LOG.infof("Atualizando o usuario: %s", dto.nome());
         service.update(dto, id);
         return Response.noContent().build();
+        }
+        catch (ConstraintViolationException e) {
+            LOG.infof("Erro ao atualizar o usuario.");
+            LOG.debug(e.getMessage());
+            Result result = new Result(e.getConstraintViolations());
+            return Response
+            .status(Status.NOT_FOUND)
+            .entity(result)
+            .build();
+        } 
+        catch (Exception e) {
+            LOG.fatal("Erro sem identificacao: " + e.getMessage());
+            Result result =   result = new Result(e.getMessage(), "404", false);
+            return Response
+            .status(Status.NOT_FOUND)
+            .entity(result)
+            .build();
+        }
     }
 
     @DELETE

@@ -1,12 +1,7 @@
 package br.unitins.topicos1.dto;
 
-
-
 import br.unitins.topicos1.model.Album;
 import br.unitins.topicos1.model.TipoProduto;
-
-
-
 public record AlbumResponseDTO(
     Long id,
     String nome,
