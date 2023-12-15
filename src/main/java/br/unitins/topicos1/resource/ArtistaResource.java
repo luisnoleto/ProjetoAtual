@@ -33,12 +33,12 @@ public class ArtistaResource {
     ArtistaService service;
     
     private static final Logger LOG = Logger.getLogger(ArtistaResource.class);
+    private Result result;
 
     @POST
     //@Transactional
     public Response insert(@Valid ArtistaDTO dto){
         LOG.infof("Inserindo um novo artista: %s", dto.nome());
-        Result result = null;
         try {
             LOG.infof("Inserido o novo artista");
             return Response.status(Status.CREATED).entity(service.insert(dto)).build();
@@ -49,7 +49,7 @@ public class ArtistaResource {
             result = new Result(e.getConstraintViolations());
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result =   result = new Result(e.getMessage(), "404", false);
+            result = new Result(e.getMessage(), "404", false);
         }
         return Response.status(Status.NOT_FOUND).entity(result).build();
     }
@@ -58,7 +58,6 @@ public class ArtistaResource {
     //@Transactional
     @Path("/{id}")   
     public Response update(ArtistaDTO dto, @PathParam("id") Long id){
-        Result result = null;
         try{
             service.update(dto, id);
             LOG.infof("Atualizado o artista: %s", dto.nome());
@@ -69,7 +68,7 @@ public class ArtistaResource {
             return Response.status(Status.BAD_REQUEST).entity(result).build();
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result =   result = new Result(e.getMessage(), "404", false);
+            result = new Result(e.getMessage(), "404", false) ;
         }
          return Response.status(Status.NOT_FOUND).entity(result).build();
     }

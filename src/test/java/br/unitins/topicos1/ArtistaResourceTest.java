@@ -83,14 +83,14 @@ public class ArtistaResourceTest {
                 .statusCode(200);
     }
 
-    @Test
-    public void findByName() {
+    @Test //nao funciona
+    public void findByName() { 
         ArtistaDTO artistaDTO = new ArtistaDTO("nome", "descricao");
         
         ArtistaResponseDTO artistaTeste = artistaService.insert(artistaDTO);
 
         given()
-            .when().get("/artistas/search/nome" + artistaTeste.nome())
+            .when().get("/artistas/search/nome/" + artistaTeste.nome())
             .then()
                 .statusCode(200);
     }

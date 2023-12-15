@@ -12,7 +12,8 @@ public record AlbumResponseDTO(
     ArtistaResponseDTO artista,
     GeneroResponseDTO genero,
     GravadoraResponseDTO gravadora,
-    TipoProduto tipoProduto
+    TipoProduto tipoProduto,
+    String nomeImagem
 ) {
     public static AlbumResponseDTO valueOf(Album album){
         return new AlbumResponseDTO(
@@ -25,7 +26,8 @@ public record AlbumResponseDTO(
             ArtistaResponseDTO.valueOf(album.getArtista()),
             GeneroResponseDTO.valueOf(album.getGenero()),
             GravadoraResponseDTO.valueOf(album.getGravadora()),
-            album.getTipoProduto()
+            album.getTipoProduto(),
+            album.getNomeImagem()
 
 
             

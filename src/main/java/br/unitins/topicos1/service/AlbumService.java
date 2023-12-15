@@ -20,5 +20,7 @@ public interface AlbumService {
 
     public List<AlbumResponseDTO> findByAll();
 
+    public void updateImage(String nomeImagem, Long id);
+
 
 }

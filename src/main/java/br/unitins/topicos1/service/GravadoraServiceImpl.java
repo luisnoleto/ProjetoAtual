@@ -35,7 +35,8 @@ public class GravadoraServiceImpl implements GravadoraService{
 
     @Override
     @Transactional
-    public GravadoraResponseDTO insert(@Valid GravadoraDTO dto) throws ConstraintViolationException {
+    public GravadoraResponseDTO insert(@Valid GravadoraDTO dto) {
+
         validar(dto);
         Gravadora novoGravadora = new Gravadora();
         novoGravadora.setNome(dto.nome());
@@ -73,7 +74,8 @@ public class GravadoraServiceImpl implements GravadoraService{
 
     @Override
     public GravadoraResponseDTO findById(Long id) {
-        return GravadoraResponseDTO.valueOf(repository.findById(id));
+        Gravadora gravadora = repository.findById(id);
+        return gravadora != null ? GravadoraResponseDTO.valueOf(gravadora) : null;
     }
 
     @Override

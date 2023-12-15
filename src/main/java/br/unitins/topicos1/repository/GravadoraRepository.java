@@ -9,6 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class GravadoraRepository implements PanacheRepository<Gravadora> {
 
     public List<Gravadora> findByName(String nome){
-        return find("nome LIKE ?1", "%"+nome, "%").list();
+        return find("nome LIKE ?1", "%"+nome+ "%").list();
     }
 }

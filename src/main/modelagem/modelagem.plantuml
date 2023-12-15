@@ -40,17 +40,18 @@ class Usuario {
         - estoque: Integer
     }
 
-    class Venda {
+    class Pedido {
     - id: Long
-    - dataCompra: LocalDate
-    - totalCompra: Double
-    - isFinalizada: Boolean
+    - dataPedido: LocalDate
+    - totalPedido: Double
+    - ifConcluida: Boolean
     }
 
-    class ItemVenda{
+    class ItemPedido{
         id: Long 
-        precoUnitario: Double
+        preco: Double
         quantidade: Interger
+
     }
 
      class Telefone {
@@ -99,16 +100,16 @@ class Usuario {
 
     TipoProduto "1" --> "*" Produto
 
-    Venda "1" o--> "1" Endereco
+    Pedido "1" o--> "1" Endereco
 
 
-    Venda "1" *--> "*" ItemVenda
+    Pedido "1" *--> "*" ItemPedido
 
     Album --|> Produto
 
-    Venda "*" --> "1" Usuario
+    Pedido "*" --> "1" Usuario
 
-    ItemVenda "*" --> "1" Produto
+    ItemPedido "*" --> "1" Produto
 
     Usuario "*" *--> "1" Endereco
 
@@ -120,15 +121,15 @@ class Usuario {
 
     Album "*" --> "1" Gravadora
 
-    Venda "1" --> "1" Usuario
+    Pedido "1" --> "1" Usuario
 
-    Venda "1" --> "1" Pagamento
+    Pedido "1" --> "1" Pagamento
 
     Pagamento <|-- Boleto
     Pagamento <|-- Pix
     Pagamento <|-- CartaoCredito
 
-    Venda "1" --> "1" Usuario
+    Pedido "1" --> "1" Usuario
     
 
 

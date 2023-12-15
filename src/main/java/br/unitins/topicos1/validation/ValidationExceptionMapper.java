@@ -13,10 +13,10 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
     @Override
     public Response toResponse(ValidationException exception) {
 
-        ValidationError validationError = new ValidationError("400", "Erro de validação.");
-        validationError.addFieldError(exception.getFieldName(), exception.getMessage());
+        ValidationResult validationResult = new ValidationResult("400", "Erro de validação.");
+        validationResult.addFieldResult(exception.getFieldName(), exception.getMessage());
 
-        return Response.status(Status.BAD_REQUEST).entity(validationError).build();
+        return Response.status(Status.BAD_REQUEST).entity(validationResult).build();
 
     }
 }

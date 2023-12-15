@@ -1,11 +1,13 @@
 package br.unitins.topicos1;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
 import br.unitins.topicos1.dto.GravadoraDTO;
 import br.unitins.topicos1.dto.GravadoraResponseDTO;
 import br.unitins.topicos1.service.GravadoraService;
+import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
 
@@ -13,6 +15,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
+@QuarkusTest
 public class GravadoraResourceTest {
     
     @Inject
@@ -43,29 +46,29 @@ public class GravadoraResourceTest {
     @Test
     public void testUpdate() {
 
-        GravadoraDTO gravadoraDTO = new GravadoraDTO("nome1");
+        GravadoraDTO gravadoraDTO = new GravadoraDTO("gravadora2");
         
         Long id = gravadoraService.insert(gravadoraDTO).id();
 
-        GravadoraDTO dtoUpdate = new GravadoraDTO("nome2");
+        GravadoraDTO dtoUpdate = new GravadoraDTO("gravadora3");
 
         given().contentType(ContentType.JSON).body(dtoUpdate).when().put("/gravadoras/" + id).then().statusCode(200);
 
         GravadoraResponseDTO Gravadora = gravadoraService.findById(id);
-        assertThat(Gravadora.nome(), is("nome2"));
+        assertThat(Gravadora.nome(), is("gravadora3"));
     
     }
 
     @Test
     public void testDelete() {
-        GravadoraDTO gravadoraDTO = new GravadoraDTO("nome1");
+        GravadoraDTO gravadoraDTO = new GravadoraDTO("gravadora4");
         
         GravadoraResponseDTO gravadoraTeste = gravadoraService.insert(gravadoraDTO);
 
-        given().when().delete("/gravadoras/" + gravadoraTeste.id()).then().statusCode(204);
+        given().when().delete("/gravadoras/" + gravadoraTeste.id()).then().statusCode(200);
 
         GravadoraResponseDTO gravadora = gravadoraService.findById(gravadoraTeste.id());
-        assertThat(gravadora, is(notNullValue()));
+        assertNull(gravadora);
     }
 
     // @Test
@@ -82,7 +85,7 @@ public class GravadoraResourceTest {
     @Test
     public void testFindById() {
 
-        GravadoraDTO gravadoraDTO = new GravadoraDTO("nome1");
+        GravadoraDTO gravadoraDTO = new GravadoraDTO("gravadora5");
         
         GravadoraResponseDTO gravadoraTeste = gravadoraService.insert(gravadoraDTO);
 

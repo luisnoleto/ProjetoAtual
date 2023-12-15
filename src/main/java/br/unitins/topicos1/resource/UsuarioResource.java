@@ -1,11 +1,9 @@
 package br.unitins.topicos1.resource;
 
-import java.util.List;
-
 import br.unitins.topicos1.application.Result;
 import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.service.UsuarioService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -33,6 +31,7 @@ public class UsuarioResource {
     UsuarioService service;
 
     @POST
+    @RolesAllowed({ "ADMIN", "USER" })
     public Response insert(UsuarioDTO dto) {
         Result result = null;
 
@@ -49,7 +48,6 @@ public class UsuarioResource {
         } 
         catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result =   result = new Result(e.getMessage(), "404", false);
         }
         return Response
         .status(Status.NOT_FOUND)
@@ -60,6 +58,7 @@ public class UsuarioResource {
     @PUT
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({ "ADMIN", "USER" })
     public Response update(UsuarioDTO dto, @PathParam("id") Long id) {
         try{
         LOG.infof("Atualizando o usuario: %s", dto.nome());
@@ -77,7 +76,7 @@ public class UsuarioResource {
         } 
         catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            Result result =   result = new Result(e.getMessage(), "404", false);
+            Result result = new Result(e.getMessage(), "404");
             return Response
             .status(Status.NOT_FOUND)
             .entity(result)
@@ -88,25 +87,32 @@ public class UsuarioResource {
     @DELETE
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({ "ADMIN"})
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
 
     @GET
+    @RolesAllowed({ "ADMIN", "USER" })
     public Response findAll() {
         return Response.ok(service.findByAll()).build();
     }
 
+
     @GET
+    @RolesAllowed({ "ADMIN" })
     @Path("/{id}")
-    public UsuarioResponseDTO findById(@PathParam("id") Long id) {
-        return service.findById(id);
-    }
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
+    }    
+
     
+
     @GET
+    @RolesAllowed({ "ADMIN" })
     @Path("/search/login/{login}")
-    public List<UsuarioResponseDTO> findByLogin(@PathParam("login") String login) {
-        return service.findByLogin(login);
+    public Response findByLogin(@PathParam("login") String login){
+        return Response.ok(service.findByLogin(login)).build();
     }
 }

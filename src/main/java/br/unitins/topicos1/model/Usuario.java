@@ -1,12 +1,14 @@
 package br.unitins.topicos1.model;
 
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -17,13 +19,24 @@ public class Usuario extends DefaultEntity {
 
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
     private String senha;
-    private Boolean isAdmin;
 
+    private String nomeImagem;
+
+    @NotBlank(message = "CPF é obrigatório")
+    private String cpf;
+	
+   @Column(name = "perfil")
+   private Perfil perfil;
+    
     @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true )
     @JoinTable(name="usuario_telefone",
         joinColumns= @JoinColumn(name="id_usuario"),
         inverseJoinColumns = @JoinColumn(name="id_telefone") )
     private List<Telefone> listaTelefone;
+
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 
     public String getLogin() {
         return login;
@@ -48,15 +61,7 @@ public class Usuario extends DefaultEntity {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public Boolean getIsAdmin(){
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean isAdmin){
-        this.isAdmin = isAdmin;
-    }
-
+    
     public List<Telefone> getListaTelefone() {
         return listaTelefone;
     }
@@ -65,6 +70,35 @@ public class Usuario extends DefaultEntity {
         this.listaTelefone = listaTelefone;
     }
 
+    public Perfil getPerfil(){
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil){
+        this.perfil = perfil;
+    }
+
+    public Endereco getEndereco(){
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco){
+        this.endereco = endereco;
+    }
     
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem){
+        this.nomeImagem = nomeImagem;
+    }
     
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf){
+        this.cpf = cpf;
+    }
 }

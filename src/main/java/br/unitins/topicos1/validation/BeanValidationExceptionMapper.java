@@ -15,7 +15,7 @@ public class BeanValidationExceptionMapper implements ExceptionMapper<Constraint
     @Override
     public Response toResponse(ConstraintViolationException exception) {
 
-        ValidationError validationError = new ValidationError("400", "Erro de validação.");
+        ValidationResult validationResult = new ValidationResult("400", "Erro de validação.");
 
         for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
             String fullFieldName = violation.getPropertyPath().toString();
@@ -23,10 +23,10 @@ public class BeanValidationExceptionMapper implements ExceptionMapper<Constraint
             String fieldName = parts[parts.length - 1];
             String message = violation.getMessage();
 
-            validationError.addFieldError(fieldName, message);
+            validationResult.addFieldResult(fieldName, message);
         }
 
-        return Response.status(Status.BAD_REQUEST).entity(validationError).build();
+        return Response.status(Status.BAD_REQUEST).entity(validationResult).build();
 
     }
 }

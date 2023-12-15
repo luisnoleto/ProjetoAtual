@@ -49,7 +49,7 @@ public class GeneroResource {
             result = new Result(e.getConstraintViolations());
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result =   result = new Result(e.getMessage(), "404", false);
+            result = new Result(e.getMessage(), "404", false);
         }
         return Response.status(Status.NOT_FOUND).entity(result).build();
     }
@@ -69,7 +69,7 @@ public class GeneroResource {
             return Response.status(Status.BAD_REQUEST).entity(result).build();
         } catch (Exception e) {
             LOG.fatal("Erro sem identificacao: " + e.getMessage());
-            result =   result = new Result(e.getMessage(), "404", false); 
+            result = new Result(e.getMessage(), "404", false); 
         }
          return Response.status(Status.NOT_FOUND).entity(result).build();
     }

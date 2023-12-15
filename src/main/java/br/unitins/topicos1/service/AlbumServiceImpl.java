@@ -111,4 +111,12 @@ public AlbumResponseDTO update(AlbumDTO dto, Long id) {
             .map(a -> AlbumResponseDTO.valueOf(a)).toList();
     }
     
+    @Override
+    public void updateImage(String nomeImagem, Long id) {
+
+        Album album = repository.findById(id);
+        if(album==null)
+            throw new NullPointerException("Album não encontrado");
+        album.setNomeImagem(nomeImagem);
+    }
 }

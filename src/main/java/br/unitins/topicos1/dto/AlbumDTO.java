@@ -22,14 +22,15 @@ public record AlbumDTO (
 
     TipoProduto tipoProduto,
 
-    
     Integer estoque,
 
     Long id_artista,
 
     Long id_genero,
 
-    Long id_gravadora
+    Long id_gravadora,
+
+    String nomeImagem
     
 )
 {}

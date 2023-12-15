@@ -10,7 +10,7 @@ import jakarta.persistence.NoResultException;
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario>{
     public List<Usuario> findByName(String nome){
-        return find("nome LIKE ?1", "%"+nome, "%").list();
+        return find("nome LIKE ?1", "%"+nome+ "%").list();
     }
 
      public Usuario findByLogin(String login) {
@@ -19,7 +19,7 @@ public class UsuarioRepository implements PanacheRepository<Usuario>{
        }    
        catch (NoResultException e) {
            e.printStackTrace();
-           throw new RuntimeException("Erro ao buscar Usuario");
+           return null;
        }
      }
         public Usuario findByLoginAndSenha(String login, String senha) {
