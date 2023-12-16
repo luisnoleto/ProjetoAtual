@@ -3,7 +3,6 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 
 import org.jboss.logging.Logger;
-
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.Consumes;
@@ -18,7 +17,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-
 import br.unitins.topicos1.application.Result;
 import br.unitins.topicos1.dto.MunicipioDTO;
 import br.unitins.topicos1.dto.MunicipioResponseDTO;
@@ -121,7 +119,7 @@ public class MunicipioResource {
 
     @GET
     @Path("/searchByNome/{nome}")
-    public List<MunicipioResponseDTO> getByNome(@PathParam("nome") String nome) throws NullPointerException {
+    public List<MunicipioResponseDTO> getByNome(@PathParam("nome") String nome) {
         LOG.infof("Pesquisando Município po nome.", nome);
         LOG.debug("ERRO DE DEBUG.");
         return municipioService.getByNome(nome);
@@ -129,7 +127,7 @@ public class MunicipioResource {
 
     @GET
     @Path("/searchByNomeEstado/{nomeEstado}")
-    public List<MunicipioResponseDTO> getByNomeEstado(@PathParam("nomeEstado") String nomeEstado) throws NullPointerException {
+    public List<MunicipioResponseDTO> getByNomeEstado(@PathParam("nomeEstado") String nomeEstado) {
         LOG.infof("Buscando município por nome do estado.", nomeEstado);
         LOG.debug("ERRO DE DEBUG.");
         return municipioService.getByNomeEstado(nomeEstado);
@@ -137,8 +135,7 @@ public class MunicipioResource {
 
     @GET
     @Path("/searchBySiglaEstado/{siglaEstado}")
-    public List<MunicipioResponseDTO> getBySiglaEstado(@PathParam("siglaEstado") String siglaEstado)
-            throws NullPointerException {
+    public List<MunicipioResponseDTO> getBySiglaEstado(@PathParam("siglaEstado") String siglaEstado){
                 LOG.infof("Buscando município por sigla do estado.", siglaEstado);
                 LOG.debug("ERRO DE DEBUG.");
         return municipioService.getBySiglaEstado(siglaEstado);

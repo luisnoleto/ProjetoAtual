@@ -1,50 +1,47 @@
 package br.unitins.topicos1.model;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
-public class Pix extends Pagamento {
+public class Pix extends DefaultEntity {
 
-    @Column(nullable = false)
-    private String nome;
+    private Double valor;;
 
-    @Column(nullable = false)
-    private String cpf;
+    private String chaveAleatoria;
 
     private LocalDate dataExpiracaoTokenPix;
 
-    public Pix(Double valor, String nome, String cpf) {
+    @OneToOne
+    @JoinColumn(name = "id_pedido")
+    private Pedido idPedido;
 
-        super(valor);
-
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataExpiracaoTokenPix = LocalDate.now().plusDays(1);
+   public Double getValor() {
+        return valor;
     }
 
-    public Pix() {
-
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Pedido getIdPedido() {
+        return idPedido;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setIdPedido(Pedido idPedido) {
+        this.idPedido = idPedido;
     }
 
-    public String getNome() {
-        return nome;
+    public String getChaveAleatoria() {
+        return chaveAleatoria;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setChaveAleatoria(String chaveAleatoria) {
+        this.chaveAleatoria = chaveAleatoria;
     }
 
     public LocalDate getDataExpiracaoTokenPix() {

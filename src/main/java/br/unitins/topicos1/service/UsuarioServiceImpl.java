@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.UpdateSenhaDTO;
 import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
-import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
-import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.repository.MunicipioRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.validation.ValidationException;
@@ -68,12 +65,14 @@ public class UsuarioServiceImpl implements UsuarioService {
                 telefone.setNumero(tel.numero());
                 novoUsuario.getListaTelefone().add(telefone);
             }
-        }
-
-        usuarioRepository.persist(novoUsuario);
+        } else
+            throw new ValidationException("listaTelefone", "O usuário deve ter pelo menos um telefone.");
+            
 
         return UsuarioResponseDTO.valueOf(novoUsuario);
-    }
+        }
+        
+    
 
     @Override
     @Transactional
@@ -100,9 +99,12 @@ public class UsuarioServiceImpl implements UsuarioService {
                 telefone.setNumero(tel.numero());
                 usuario.getListaTelefone().add(telefone);
             }
-        }
+        } else
+            throw new ValidationException("listaTelefone", "O usuário deve ter pelo menos um telefone.");
+        
+        
         return UsuarioResponseDTO.valueOf(usuario);
-    }
+        }
 
     @Override
     @Transactional
@@ -156,51 +158,4 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("senha", "Senha incorreta!");
       }
        
-
-    @Override
-    @Transactional
-    public UsuarioResponseDTO updateEndereco(Long id, EnderecoDTO enderecoDTO) {
-
-        Usuario usuario = usuarioRepository.findById(id);
-
-        Long idEndereco = usuario.getEndereco().getId();
-
-        usuario.setEndereco(insertEndereco(enderecoDTO));
-
-        return UsuarioResponseDTO.valueOf(usuario);
-
-    }
-
-    private Endereco insertEndereco(EnderecoDTO enderecoDto) throws ConstraintViolationException {
-
-        validar(enderecoDto);
-
-        Endereco endereco = new Endereco();
-
-        endereco.setLogradouro(enderecoDto.logradouro());
-
-        endereco.setBairro(enderecoDto.bairro());
-
-        endereco.setNumero(enderecoDto.numero());
-
-        endereco.setComplemento(enderecoDto.complemento());
-
-        endereco.setCep(enderecoDto.cep());
-
-        endereco.setMunicipio(municipioRepository.findById(enderecoDto.idMunicipio()));
-
-
-        return endereco;
-    }
-
-
-        private void validar(EnderecoDTO enderecoDTO) throws ConstraintViolationException {
-
-        Set<ConstraintViolation<EnderecoDTO>> violations = validator.validate(enderecoDTO);
-
-        if (!violations.isEmpty())
-            throw new ConstraintViolationException(violations);
-
-    }
-
 }

@@ -37,7 +37,7 @@ public class EstadoResource {
     @GET
     public List<EstadoResponseDTO> getAll() {
         LOG.infof("Buscando todos os estados");
-        LOG.debug("ERRO DE DEBUG.");
+
         return estadoService.getAll();
     }
 
@@ -45,7 +45,7 @@ public class EstadoResource {
     @Path("/{id}")
     public EstadoResponseDTO getById(@PathParam("id") Long id) throws NotFoundException {
         LOG.infof("Buscando estados por ID. ", id);
-        LOG.debug("ERRO DE DEBUG.");
+    
         return estadoService.getById(id);
     }
 
@@ -124,23 +124,22 @@ public class EstadoResource {
     @Path("/count")
     public Long count() {
         LOG.infof("Contando todos os estados");
-        LOG.debug("ERRO DE DEBUG.");
         return estadoService.count();
     }
 
     @GET
     @Path("/searchByNome/{nome}")
-    public List<EstadoResponseDTO> getByNome(@PathParam("nome") String nome) throws NullPointerException {
+    public List<EstadoResponseDTO> getByNome(@PathParam("nome") String nome) {
         LOG.infof("Buscando estado pelo  nome. ", nome);
-        LOG.debug("ERRO DE DEBUG.");
+       
         return estadoService.getByNome(nome);
     }
 
     @GET
     @Path("/searchBySigla/{sigla}")
-    public List<EstadoResponseDTO> getBySigla(@PathParam("sigla") String sigla) throws NullPointerException {
+    public List<EstadoResponseDTO> getBySigla(@PathParam("sigla") String sigla) {
         LOG.infof("Buscando estado pela sigla. ", sigla);
-        LOG.debug("ERRO DE DEBUG.");
+       
         return estadoService.getBySigla(sigla);
     }
 }

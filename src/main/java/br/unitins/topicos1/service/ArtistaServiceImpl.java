@@ -13,6 +13,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -35,7 +36,7 @@ public class ArtistaServiceImpl implements ArtistaService{
 
     @Override
     @Transactional
-    public ArtistaResponseDTO insert(ArtistaDTO dto) {
+    public ArtistaResponseDTO insert(@Valid ArtistaDTO dto) {
         validar(dto);
         Artista novoArtista = new Artista();
         novoArtista.setNome(dto.nome());

@@ -3,11 +3,13 @@ package br.unitins.topicos1.model;
 import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
-public class CartaoCredito extends Pagamento {
+public class CartaoCredito extends DefaultEntity{
 
     @Column(nullable = false)
     private String numeroCartao;
@@ -24,25 +26,19 @@ public class CartaoCredito extends Pagamento {
     @Column(nullable = false)
     private String codigoSeguranca;
 
- 
+    @ManyToOne
+    @JoinColumn(name = "id_pedido")
+    private Pedido idPedido;
 
-    public CartaoCredito(Double valor, String numeroCartao, String nomeImpressoCartao,
-            String cpfTitular, LocalDate dataValidade, String codigoSeguranca) {
+    private Double valor;
 
-        super(valor);
-
-        this.numeroCartao = numeroCartao;
-        this.nomeImpressoCartao = nomeImpressoCartao;
-        this.cpfTitular = cpfTitular;
-        this.dataValidade = dataValidade;
-        this.codigoSeguranca = codigoSeguranca;
-     
+    public Double getValor() {
+        return valor;
     }
 
-    public CartaoCredito() {
-
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
-
     public String getNumeroDoCartao() {
         return numeroCartao;
     }
@@ -83,6 +79,13 @@ public class CartaoCredito extends Pagamento {
         this.codigoSeguranca = codigoSeguranca;
     }
 
+    public Pedido getPedido() {
+        return idPedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.idPedido = pedido;
+    }
 
 
 }

@@ -8,7 +8,7 @@ public record TelefoneResponseDTO(
     String numero
     
 ) {
-   public static TelefoneDTO valeuOf(Telefone telefone){
+   public static TelefoneDTO valueOf(Telefone telefone){
         return new TelefoneDTO(
             telefone.getCodigoArea(), 
             telefone.getNumero());

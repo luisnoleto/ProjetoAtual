@@ -26,4 +26,14 @@ public enum TipoProduto {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public static TipoProduto valueOf(Integer id) throws IllegalArgumentException {
+        if (id == null)
+            return null;
+        for (TipoProduto tipo : TipoProduto.values()) {
+            if (tipo.getId() == id)
+                return tipo;
+        }
+        throw new IllegalArgumentException("Id inválido" + id);
+    }
 }

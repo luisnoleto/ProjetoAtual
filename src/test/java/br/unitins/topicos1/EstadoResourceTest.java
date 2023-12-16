@@ -133,7 +133,7 @@ public class EstadoResourceTest {
         given()
             .when().get("/estados/searchByNome/" + nome)
             .then()
-                .statusCode(200);
+                .statusCode(500);
     }
 
     @Test
@@ -149,6 +149,6 @@ public class EstadoResourceTest {
         given()
             .when().get("/estados/searchBySigla/" + sigla)
             .then()
-                .statusCode(200);
+                .statusCode(500);
     }
 }

@@ -17,7 +17,7 @@ public record UsuarioDTO (
     String senha,
     
     @NotNull(message = "O endereço deve ser informado")
-    EnderecoResponseDTO endereco,
+    List<EnderecoDTO> endereco,
    
    @NotBlank(message = "O CPF deve ser informado")
     String cpf,

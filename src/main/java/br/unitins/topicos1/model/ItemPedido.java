@@ -9,22 +9,16 @@ public class ItemPedido extends DefaultEntity {
 
     private Integer quantidade;
 
+    private Double valor;
+
     @ManyToOne
     @JoinColumn(name = "id_album")
     private Album album; 
 
-    @ManyToOne
-    @JoinColumn(name = "id_pedido")
-    private Pedido pedido;
-
     public ItemPedido(Album album, Integer quantidade) {
         this.album = album;
         this.quantidade = quantidade;
-
-
     }
-
-    //default constructor
 
     public ItemPedido() {
         super();
@@ -46,12 +40,12 @@ public class ItemPedido extends DefaultEntity {
         this.album = album;
     }
 
-    public Pedido getPedido() {
-        return pedido;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
 }

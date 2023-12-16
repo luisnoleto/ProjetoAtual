@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -34,9 +33,9 @@ public class Usuario extends DefaultEntity {
         inverseJoinColumns = @JoinColumn(name="id_telefone") )
     private List<Telefone> listaTelefone;
 
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
+    @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true )
+    @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
+    private List<Endereco> listaEndereco;
 
     public String getLogin() {
         return login;
@@ -78,12 +77,12 @@ public class Usuario extends DefaultEntity {
         this.perfil = perfil;
     }
 
-    public Endereco getEndereco(){
-        return endereco;
+    public List<Endereco> getEndereco() {
+        return listaEndereco;
     }
 
-    public void setEndereco(Endereco endereco){
-        this.endereco = endereco;
+    public void setEndereco(List<Endereco> listaEndereco) {
+        this.listaEndereco = listaEndereco;
     }
     
     public String getNomeImagem() {

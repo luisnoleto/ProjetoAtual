@@ -31,26 +31,5 @@ public record EnderecoDTO(
     String estado
 ) {
 
-    // Método factory para criar uma instância de EnderecoDTO
-    public static EnderecoDTO valueOf(
-        String logradouro,
-        String bairro,
-        String numero,
-        String complemento,
-        String cep,
-        Long idMunicipio,
-        String cidade,
-        String estado
-    ) {
-        return new EnderecoDTO(
-            logradouro,
-            bairro,
-            numero,
-            complemento,
-            cep,
-            idMunicipio,
-            cidade,
-            estado
-        );
-    }
+  
 }

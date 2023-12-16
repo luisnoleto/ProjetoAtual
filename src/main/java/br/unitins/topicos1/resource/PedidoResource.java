@@ -1,24 +1,17 @@
 package br.unitins.topicos1.resource;
-import java.util.List;
 
 import org.jboss.logging.Logger;
-import br.unitins.topicos1.dto.ArtistaDTO;
-import br.unitins.topicos1.dto.ArtistaResponseDTO;
-import br.unitins.topicos1.dto.ItemPedidoDTO;
+import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
-import br.unitins.topicos1.model.ItemPedido;
-import br.unitins.topicos1.service.ArtistaService;
 import br.unitins.topicos1.service.PedidoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -35,45 +28,52 @@ public class PedidoResource {
 
     @Inject
     PedidoService service;
+
+    @Inject
+    JsonWebToken jwt;
     
     private static final Logger LOG = Logger.getLogger(PedidoResource.class);
     private Result result;
+     
 
     @POST
-    //@Transactional
-    public Response insert(@Valid ItemPedidoDTO dto){
-        LOG.infof("Inserindo um novo peido: %s", dto.idProduto());
+    @Path("/iniciar-pedido")
+    @RolesAllowed({ "USER", "ADMIN" })
+    public Response insert(@Valid PedidoDTO dto){
+        LOG.infof("Inserindo um novo pedido: %s");
         try {
-            LOG.infof("Inserido o novo pedido");
-            PedidoResponseDTO ip = service.insert(Long.parseLong("1"), dto);
-            System.out.println("ID do item pedido: " + ip.id());
+            String login = jwt.getSubject();
+            LOG.infof("Usuário logado: %s", login);
+            PedidoResponseDTO ip = service.insert(login, dto);
+            LOG.infof("Pedido inserido com sucesso: %s", ip);
             return Response.status(Status.CREATED).entity(ip).build();
 
         } catch (ConstraintViolationException e) {
-            LOG.infof("Erro ao inserir o artista.");
+            LOG.infof("Erro ao inserir, campo nulo.");
             LOG.debug(e.getMessage());
             result = new Result(e.getConstraintViolations());
         } catch (Exception e) {
-            LOG.fatal("Erro sem identificacao: " + e.getMessage());
+            LOG.fatal("Erro sem identificação: " + e.getMessage());
             result = new Result(e.getMessage(), "404", false);
         }
         return Response.status(Status.NOT_FOUND).entity(result).build();
     }
 
-    @DELETE
-    @Transactional
-    @Path("/{id}")
-    public Response delete(@PathParam("id") Long idUsuario, Long idPedido) throws IllegalArgumentException{
-        try{
-            service.delete(idUsuario, idPedido);
-            LOG.infof("Deletado o pedido: %d", idPedido);
-            return Response.status(Status.NO_CONTENT).build();
-        } catch (IllegalArgumentException e) {
-            LOG.fatal("Erro sem identificacao: " + e.getMessage());
+   
+
+    @GET
+    @Path("buscar/pedido/{id}")
+    @RolesAllowed({"ADMIN" })
+    public Response findById(@PathParam("id") Long id) {
+        LOG.infof("Iniciando busca do Pedido : %s", id);
+        PedidoResponseDTO pedido = service.findById(id);
+        if (pedido != null) {
+            return Response.ok(pedido).build();
+        } else {
             return Response.status(Status.NOT_FOUND).build();
         }
-        
     }
+
 
 
     

@@ -18,14 +18,6 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
         return find("usuario.id = ?1", idUsuario).list();
     }
 
-    
-    public Pedido findByUsuarioPedido (Usuario usuario) {
-
-        if (usuario == null)
-            return null;
-        
-        return find("FROM Pedido WHERE usuario = ?1 " , usuario).firstResult();
-    }
 
     public List<Pedido> findByUsuarioPedidos (Usuario usuario) {
         if (usuario == null)
@@ -34,6 +26,11 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
         return find("FROM Pedido WHERE usuario = ?1 " , usuario).list();
     }
 
-  
+    public Pedido findByUsuarioPedido(String login, Long idPedido) {
+        if (login == null || idPedido == null)
+            return null;
+        
+        return find("usuario.login = ?1 and id = ?2", login, idPedido).firstResult();
+    }
 
 }

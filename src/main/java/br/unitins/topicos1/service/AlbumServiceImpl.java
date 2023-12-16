@@ -15,6 +15,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
 
@@ -45,7 +46,7 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     @Transactional
-    public AlbumResponseDTO insert(AlbumDTO dto) {
+    public AlbumResponseDTO insert(@Valid AlbumDTO dto) {
         validar(dto);
         Album novoAlbum = new Album();
 

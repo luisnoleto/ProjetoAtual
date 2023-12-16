@@ -8,12 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-import br.unitins.topicos1.form.AlbumImageForm;
-import io.vertx.core.cli.annotations.Name;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.PATCH;
 
 @ApplicationScoped
 public class UsuarioFileService implements FileService {
